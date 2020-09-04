@@ -291,4 +291,3 @@ app = Application(master=root)
 
 root.mainloop()
 
-#%%
