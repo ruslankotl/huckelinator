@@ -19,7 +19,7 @@ import math
 
 class Application(tk.Frame):
     def __init__(self, master = None):
-        #initialise the program
+        # initialise the program
         super().__init__(master)
         self.master = master
         self.pack()
@@ -28,7 +28,7 @@ class Application(tk.Frame):
     '''Interface functions'''
 
     def create_widgets(self):
-        #main menu
+        # main menu
         self.lin = tk.Button(self)
         self.lin['text'] = 'Linear polyenes'
         self.lin['command'] = self.linear
@@ -108,9 +108,9 @@ class Application(tk.Frame):
 
 
     def linear_matrix(self, n):
-        #specify Huckel matrix for a linear polyene of length n
+        # specify Huckel matrix for a linear polyene of length n
 
-        H = np.zeros((n,n)) #initialise n*n matrix
+        H = np.zeros((n,n)) # initialise n*n matrix
         for i in range(n-1):
             H[i,i+1] = 1
         for i in range(n-1):
@@ -130,13 +130,7 @@ class Application(tk.Frame):
     def get_evals(self, m):
 
         evals, evecs = np.linalg.eig(m)
-
-        #print('Eigenvalues check out: '+ str(check_evals(evals)) + '\n')
-
         result = sorted(evals.real)
-
-        #for each in result:
-            #print(round(each, 4))
 
         return result
 
@@ -149,7 +143,6 @@ class Application(tk.Frame):
             else:
                 out_list.append([round(evals[i],3),count+1])
                 count=0
-        #print (out_list)
         return (out_list)
 
 
@@ -190,7 +183,7 @@ class Application(tk.Frame):
         return T
 
     def cube(self):
-        C = self.cyclic_matrix(8) #define a cube as an 8-membered ring, add extra connections
+        C = self.cyclic_matrix(8) # define a cube as an 8-membered ring, add extra connections
         C[0,3]=C[3,0]=1
         C[1,6]=C[6,1]=1
         C[2,5]=C[5,2]=1
@@ -198,14 +191,14 @@ class Application(tk.Frame):
         return C
 
     def octahedron(self):
-        O = self.cyclic_matrix(6) #define octahedron as a 6-membered ring, add missed connections
+        O = self.cyclic_matrix(6) # define octahedron as a 6-membered ring, add missed connections
         O[0,2]=O[0,3]=O[1,4]=O[1,5]=O[2,0]=O[3,0]=1
         O[4,1]=O[5,1]=O[3,5]=O[5,3]=O[2,4]=O[4,2]=1
         return O
 
 
-    def dodecahedron(self): #generating the matrix for dodecahedron
-        #specifying coordinates
+    def dodecahedron(self): # generating the matrix for dodecahedron
+        # specifying coordinates
         phi = (math.sqrt(5)+1)/2
         coordinates = []
         for dummy in range(8):
@@ -217,7 +210,7 @@ class Application(tk.Frame):
         for dummy in range(4):
             coordinates.append((phi*(-1)**(dummy),(1/phi)*(-1)**(dummy//2),0))
 
-        #create the matrix
+        # create the matrix
         H = np.zeros((20,20))
         for r1 in coordinates:
             for r2 in coordinates:
@@ -250,14 +243,14 @@ class Application(tk.Frame):
     def fullerene(self): #treating as a truncated icosahedron
         phi = (math.sqrt(5)+1)/2
         coordinates = []
-        #sets of 0, 1, phi
+        # sets of 0, 1, phi
         for dummy in range(4):
             coordinates.append((0,(-1)**(dummy//2),(3*phi)*(-1)**(dummy)))
         for dummy in range(4):
             coordinates.append(((-1)**(dummy//2),(3*phi)*(-1)**(dummy),0))
         for dummy in range(4):
             coordinates.append(((3*phi)*(-1)**(dummy),0,(-1)**(dummy//2)))
-        #sets of 1, 2+phi, 2*phi
+        # sets of 1, 2+phi, 2*phi
         for dummy in range(8):
             coordinates.append(((1)*(-1)**(dummy//4),(2+phi)*(-1)**(dummy//2),((2*phi)*(-1)**(dummy))))
         for dummy in range(8):
